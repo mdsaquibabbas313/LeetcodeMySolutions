@@ -1,0 +1,31 @@
+class Solution {
+public:
+    static bool comp(string s1 , string s2){
+        if(s1.length() > s2.length()) return true;
+        if(s1.length() == s2.length()) {
+            if(s1<s2) return true;
+        }
+        return false;
+    }
+    string findLongestWord(string s, vector<string>& dictionary) {
+        int n = dictionary.size();
+        vector<string> v;
+        for(int i = 0 ; i<n ; i++){
+            int c1 = 0; // pointer for s
+            int c2 = 0; // pointer for each element in dictionary
+            string s1 = dictionary[i];
+            while(c1<s.size() && c2<s1.size()){
+                if(s[c1] == s1[c2]){
+                    c1+=1;
+                    c2+=1;
+                }
+                else c1+=1;
+            }
+            if(c2==s1.size()) v.push_back(s1);
+        }
+        // for(auto i : v) cout << i << " ";
+        if(v.size() == 0) return "";
+        sort(v.begin() , v.end() , comp);
+        return v[0];
+    }
+};
