@@ -1,0 +1,82 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ // Bruth Force
+class Solution1 {
+public:
+    TreeNode* res;
+    void CommonAncestor(TreeNode* &root , int ans){
+        if(root==NULL) return ;
+        if(root->val == ans) res = root;
+        CommonAncestor(root->left , ans);
+        CommonAncestor(root->right , ans);
+        
+    }
+    bool getNodePath(TreeNode* root , vector<int>& v , bool flag , int x){
+        if(root==NULL) return false;
+        bool leftCheck = getNodePath(root->left , v , flag , x);
+        bool rightCheck = getNodePath(root->right , v , flag , x);
+        v.push_back(root->val);
+        if(leftCheck == false && rightCheck == false && root->val == x) {return true;}
+        if(leftCheck == false && rightCheck == false && root->val != x) {v.pop_back();return false;}
+        return leftCheck || rightCheck;
+
+    }
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        vector<int> v1,v2;
+        int ans = 0;
+        getNodePath(root,v1 , false , p->val);
+        getNodePath(root,v2, false , q->val);
+        for(auto i : v1) cout << i << " " ;
+        cout << endl;
+        for(auto i : v2) cout << i << " " ;
+        int i = v1.size() - 1 , j = v2.size() - 1;
+        while(i>=0 && j>=0){
+            if(v1[i] == v2[j]) {ans = v1[i];}
+            i--;
+            j--;
+        }
+        CommonAncestor(root,ans);
+        return res;
+
+    }
+};
+
+// Recursive No Space
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root==NULL) return root;
+        if(root==p || root==q) return root;
+        TreeNode* leftSide = lowestCommonAncestor(root->left , p , q);
+        TreeNode* rightSide = lowestCommonAncestor(root->right , p , q);
+        if(leftSide == NULL ) return rightSide;
+        if(rightSide == NULL ) return leftSide;
+        // if(leftSide == NULL) return rightSide;
+        // else if(rightSide == NULL) return leftSide;
+        
+        return root;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
