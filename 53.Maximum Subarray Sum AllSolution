@@ -1,0 +1,81 @@
+// Bruth Force O(N^3)
+class Solution1 {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int mx = INT_MIN;
+        for(int i = 0 ; i<nums.size() ; i++){
+            for(int j = i ; j<nums.size() ; j++){
+                int sum=0;
+                for(int k = i ; k<=j ; k++){
+                    sum += nums[k];
+                }
+                mx = max(mx,sum);
+            }
+        }
+        return mx;
+    }
+};
+// Bruth Force O(N^2)
+class Solution2 {
+public:
+    int maxSubArray(vector<int>& nums) {
+        // if(nums.size() == 1){
+        //     return nums[0];
+        // }
+        int s = 0;
+        int mx = INT_MIN;
+        for(int i = 0 ; i<nums.size() ; i++){
+            int s=0;
+            for(int j = i ; j<nums.size() ; j++){
+                s += nums[j];
+                mx = max(mx,s);
+            }
+            
+        }
+        // mx = max(mx,s);
+        return mx;
+    }
+};
+// Divide & Conquer
+class Solution3 {
+public:
+    int mxSubArraySum(vector<int> nums , int lb , int ub){
+        if(lb==ub) return nums[lb];
+        int mid = lb + (ub-lb)/2;
+        int leftSubSum = mxSubArraySum(nums , lb , mid);
+        int rightSubSum = mxSubArraySum(nums , mid+1 , ub);
+
+        // Cross Sum;
+        int LSS = INT_MIN , RSS = INT_MIN , sum = 0;
+        for(int i = mid ; i>=lb ; i--){
+            sum += nums[i];
+            LSS = max(LSS,sum);
+        }
+        sum = 0;
+        for(int i = mid+1 ; i<=ub ; i++){
+            sum += nums[i];
+            RSS = max(RSS,sum);
+        }
+        return max({leftSubSum , rightSubSum , LSS+RSS});
+    }
+    int maxSubArray(vector<int>& nums) {
+        int n = nums.size();
+        return mxSubArraySum(nums , 0 , n-1);
+    }
+};
+
+// Kadane
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int n = nums.size();
+        int mx = INT_MIN;
+        int sum = 0;
+        for(auto i : nums){
+            sum += i;
+            mx = max(mx , sum);
+            if(sum < 0) sum=0;
+        }
+        return mx;
+    }
+};
