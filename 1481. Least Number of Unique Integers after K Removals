@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int findLeastNumOfUniqueInts(vector<int>& arr, int k) {
+        unordered_map<int,int> m;
+        // int n = arr.size();
+        for(auto i : arr) m[i] += 1;
+
+        vector<pair<int,int>> p;
+        for(auto i : m) p.push_back({i.second , i.first});
+        sort(p.begin() , p.end());
+        int c = 0;
+        int n = p.size();
+        for(auto i : p) cout << i.first << " " << i.second << endl;
+        for(auto i : p){
+            if(i.first <= k){
+                cout << "hi" << endl;
+                c+=1;
+                k-=i.first;
+                cout << c << n << endl;
+            }
+        }
+        return n - c;
+    }
+};
