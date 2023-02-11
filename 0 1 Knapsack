@@ -1,0 +1,33 @@
+#include <bits/stdc++.h> 
+int solve(vector<int> weight, vector<int> value, int ind, int maxWeight,vector<vector<int>>& dp){
+	if(ind == 0){
+		if(weight[0] <= maxWeight) return value[0];
+		else return 0;
+	}
+	if(dp[ind][maxWeight] != -1) return dp[ind][maxWeight];
+	int nontake = solve(weight,value,ind - 1 , maxWeight,dp);
+	int take = INT_MIN;
+	if(weight[ind] <= maxWeight){
+		take = value[ind] + solve(weight,value,ind-1,maxWeight- weight[ind],dp);
+	}
+	return dp[ind][maxWeight] = max(nontake,take);
+}
+int knapsack(vector<int> wt, vector<int> val, int n, int maxWeight) 
+{//	vector<vector<int>> dp(n,vector<int>(maxWeight+1 , -1));
+// 	return solve(weight , value , n-1 , maxWeight,dp);
+	vector<vector<int>> dp(n,vector<int>(maxWeight+1 , 0));
+	for(int W = wt[0] ; W <= maxWeight ; W++) dp[0][W] = val[0];
+
+	// 2 LOOP
+	for(int ind = 1 ; ind < n ; ind++){
+		for(int W = 0 ; W <= maxWeight ; W++){
+			int nontake = dp[ind - 1][W];
+			int take = INT_MIN;
+			if(wt[ind] <= W){
+			take = val[ind] + dp[ind - 1][W - wt[ind]];
+			}
+			dp[ind][W] = max(nontake,take);
+		}
+	}
+	return dp[n-1][maxWeight];
+}
