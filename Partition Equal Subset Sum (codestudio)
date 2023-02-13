@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+bool solve(vector<int> arr , int ind , int target , vector<vector<int>>& dp){
+    if(target == 0) return 1;
+    if(ind == 0) if(arr[0] == target) return 1;
+    else return 0;
+    if(dp[ind][target] != -1) return dp[ind][target];
+    bool nontake = solve(arr , ind-1 , target,dp);
+
+    bool take = false;
+
+    if(target >= arr[ind])  take = solve(arr , ind-1 , target - arr[ind],dp);
+
+    return dp[ind][target] = (nontake || take);
+}
+bool canPartition(vector<int> &arr, int n)
+{	
+	int sum = 0;
+	for(auto i : arr) sum+=i;
+	if(sum % 2 == 1) return false;
+	int k = sum / 2;
+	vector<vector<int>> dp(n,vector<int>(k+1 , -1));
+    return solve(arr , n-1 , k , dp);
+}
