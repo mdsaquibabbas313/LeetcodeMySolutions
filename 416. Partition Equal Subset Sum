@@ -1,0 +1,89 @@
+class Solution1 {
+public:
+    bool solve(vector<int> nums , int ind , int target){
+        // base case
+        if(target == 0) return true;
+
+        if(ind == 0){
+            if(abs(target - nums[0]) == 0) return true;
+            else return false;
+        }
+
+
+        int nontake = solve(nums , ind-1 , target);
+
+        int take = false;
+        if(nums[ind] <= target){
+            take = solve(nums, ind-1,target-nums[ind]);
+        }
+        return nontake || take;
+    }
+    bool canPartition(vector<int>& nums) {
+        int n = nums.size();
+        int sum = 0;
+        for(auto i : nums) sum+=i;
+        if(sum % 2 == 1) return false;
+        int target = sum / 2;
+        return (solve(nums , n-1 , target));
+    }
+};
+
+// vector<vector<int>>dp(n,vector<int>(amount+1,-1));
+
+class Solution2 {
+public:
+bool solve(vector<int> nums , int ind , int target , vector<vector<int>>& dp){
+        // base case
+        if(target == 0) return true;
+
+        if(ind == 0){
+            if(abs(target - nums[0]) == 0) return true;
+            else return false;
+        }
+        if(dp[ind][target] != -1) return dp[ind][target];
+
+        int nontake = solve(nums , ind-1 , target,dp);
+
+        int take = false;
+        if(nums[ind] <= target){
+            take = solve(nums, ind-1,target-nums[ind],dp);
+        }
+        return dp[ind][target] = nontake || take;
+    }
+    bool canPartition(vector<int>& nums) {
+        int n = nums.size();
+        int sum = 0;
+        for(auto i : nums) sum+=i;
+        if(sum % 2 == 1) return false;
+        int target = sum / 2;
+        vector<vector<int>>dp(n,vector<int>(target+1,-1));
+        return (solve(nums , n-1 , target,dp));
+}
+};
+
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        int n = nums.size();
+        int sum = 0;
+        for(auto i : nums) sum+=i;
+        if(sum % 2 == 1) return false;
+        int target = sum / 2;
+        vector<vector<int>>dp(n,vector<int>(target+1,0));
+        for(int i = 0 ; i<=target ; i++){
+            dp[0][i] = (abs(i - nums[0]) == 0);
+        }
+        for(int ind = 1 ; ind<n ; ind++){
+            for(int t = 1 ; t<=target ; t++){
+            int nontake = dp[ind-1][t];
+
+            int take = false;
+            if(nums[ind] <= t){
+            take = dp[ind-1][t-nums[ind]];
+            }
+            dp[ind][t] = (nontake || take);
+        }
+        }
+        return dp[n-1][target];
+}
+};
