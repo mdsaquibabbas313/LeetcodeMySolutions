@@ -1,0 +1,19 @@
+class Solution {
+public:
+    long long maxKelements(vector<int>& nums, int k) {
+        long long score = 0;
+        priority_queue<int> pq;
+        for(auto i : nums) pq.push(i);
+        
+        while(k--){
+            int val = pq.top();pq.pop();
+            score += val;
+            // cout << val << " ";
+            double c = val / 3.0;
+            // cout << c << endl;
+            pq.push(ceil(c));
+        }
+
+        return score;
+    }
+};
