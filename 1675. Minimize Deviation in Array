@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int minimumDeviation(vector<int>& nums) {
+        int n = nums.size();
+        priority_queue<int> pq;
+        int diff = INT_MAX;
+        for(int i = 0 ; i<n ; i++) if(nums[i] % 2 == 1) {nums[i] = nums[i] * 2;}
+        int mn = INT_MAX;
+        for(auto i : nums) mn = min(mn,i);
+        cout << mn << endl;
+        for(auto i : nums) pq.push(i);
+        while(pq.top() % 2 == 0) {
+            int x = pq.top();pq.pop();
+            diff = min(diff , x - mn);
+            mn = min(mn , x/2);
+            pq.push(x/2);
+        }
+        diff = min(diff,pq.top() - mn);
+        return diff;  
+    }
+};
