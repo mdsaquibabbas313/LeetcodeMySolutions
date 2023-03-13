@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool check(vector<int>arr1,vector<int>arr2){
+        if(arr1.size()!=arr2.size())return false;
+        for(int i=0;i<arr1.size();i++){
+            if(arr1[i]!=arr2[i])return false;
+        }
+        return true;
+    }
+
+    vector<string> findAndReplacePattern(vector<string>& words, string pattern) {
+        map<char, vector<int>> m1;
+        vector<string>ans;
+        // map of char n inds
+        for(int i = 0 ; i<pattern.size() ; i++) {
+            m1[pattern[i]].push_back(i);
+        }
+        // now check for each word 
+        for(int i = 0 ; i<words.size() ; i++) {
+            string temp = words[i];
+            if(temp.size() == pattern.size()) {
+                map<char,vector<int>> m2;
+
+                for(int j = 0 ; j<temp.size() ; j++) {
+                    m2[temp[j]].push_back(j);
+                }
+            
+            bool flag = false;
+            for(int j = 0 ; j<temp.size() ; j++) {
+                if(!check(m2[temp[j]],m1[pattern[j]])){
+                    flag = true ; break;
+                }
+            }
+            if(!flag) ans.push_back(temp);
+            }
+        }
+    return ans;
+    }
+};
