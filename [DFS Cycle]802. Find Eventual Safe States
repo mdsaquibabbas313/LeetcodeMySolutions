@@ -1,0 +1,48 @@
+class Solution {
+public:
+    // DFS cycle
+    bool dfsCycle(vector<vector<int>>& graph , int node , vector<bool>& vis , vector<bool>& inRecursion) {
+        vis[node] = true;
+        inRecursion[node] = true;
+        
+        for(auto &v : graph[node]) {
+            if(!vis[v]) {
+                if(dfsCycle(graph , v , vis , inRecursion)) return true;
+            }
+            
+            else {
+                if(inRecursion[v] == true){
+                    return true;
+                }
+            }
+        }
+        
+        inRecursion[node] = false;
+        return false;
+    }
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        vector<int> ans;
+        
+        int V = graph.size();
+        
+        
+        vector<bool> vis(V , false);
+        vector<bool> inRecursion(V , false);
+        
+        
+        for(int i = 0 ; i<V ; i++) {
+            if(!vis[i]) {
+                dfsCycle(graph , i , vis , inRecursion);
+            }
+        }
+        
+        for(int i = 0 ; i<inRecursion.size() ; i++) {
+            if(inRecursion[i] == false) {
+                ans.push_back(i);
+            }
+        }
+        
+        
+        return ans;
+    }
+};
