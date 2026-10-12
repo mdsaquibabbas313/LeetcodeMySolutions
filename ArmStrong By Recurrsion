@@ -1,0 +1,51 @@
+import java.util.*;
+
+
+public class Main {
+
+    public static int power(int base , int exp) {
+
+      int res = 1;
+
+      for(int i = 0 ; i<exp ; i++) {
+        res *= base;
+      }
+
+      return res;
+    }
+    public static int getArmStrongByRecursion(int n , int len) {
+      
+      if(n == 0) return 0;
+
+      int digit = n % 10;
+
+      // return (int)Math.pow(digit , len) + getArmStrongByRecursion(n/10 , len);
+
+      return power(digit , len) + getArmStrongByRecursion(n / 10 , len);
+ 
+
+
+    }
+    public static int len(int n) {
+      int c = 0;
+      while(n > 0) {
+        c++;
+        n = n / 10;
+      }
+      return c;
+    }
+    public static void isArmStrong(int n) {
+        int l = len(n);
+        System.out.println(l);
+        if(n < 0) System.out.println("Negative number can't be ArmStrong!");
+        else if(getArmStrongByRecursion(n , l) == n) System.out.println("Number is ArmStrong!");
+        else System.out.println("Not ArmStrong!");
+        
+    }
+    public static void main(String[] args) {
+      System.out.println("Hello, World!");
+      isArmStrong(-1634);
+      // 153 , 370 , 371
+      // 
+    }
+}
