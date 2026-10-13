@@ -1,0 +1,39 @@
+class TreeNode {
+    int data;
+    TreeNode left, right;
+
+    TreeNode(int data) {
+        this.data = data;
+        left = right = null;
+    }
+}
+
+public class Main {
+    
+    // Corrected PreOrder Traversal method
+    public static void preOrderTraversal(TreeNode node) {
+        if (node == null) return;
+
+        System.out.println("Current Root " + node.data);
+        preOrderTraversal(node.left);
+        preOrderTraversal(node.right);
+    } 
+
+    public static void main(String[] args) {
+        // Constructing a sample Binary Tree:
+        //        1
+        //       / \
+        //      2   3
+        //     / \
+        //    4   5
+        
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
+        root.left.left = new TreeNode(4);
+        root.left.right = new TreeNode(5);
+
+        System.out.println("Starting PreOrder Traversal:");
+        preOrderTraversal(root);
+    }
+}
