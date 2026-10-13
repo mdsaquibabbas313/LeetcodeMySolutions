@@ -1,0 +1,42 @@
+import java.util.*;
+
+class TreeNode{
+  private int data;
+  private TreeNode left;
+  private TreeNode right;
+
+  TreeNode(int val) {
+    this.data = val;
+    this.left = null;
+    this.right = null;
+  }
+  public int getData() { return data; }
+  public TreeNode getLeft() { return left; }
+  public TreeNode getRight() { return right; }
+
+  public void setLeft(TreeNode left) { this.left = left; }
+  public void setRight(TreeNode right) { this.right = right; }
+}
+public class Main {
+    public static void main(String[] args) {
+      TreeNode root = new TreeNode(5);
+      TreeNode leftChild = new TreeNode(15);
+      TreeNode rightChild = new TreeNode(20);
+
+      root.setLeft(leftChild);
+      root.setRight(rightChild);
+
+      TreeNode leftOfLeftChild = new TreeNode(4);
+      root.getLeft().setLeft(leftOfLeftChild);
+
+      // 3. Printing data directly (without traversal)
+        System.out.println("Root Data: " + root.getData());
+        System.out.println("Left Child Data: " + root.getLeft().getData());
+        System.out.println("Right Child Data: " + root.getRight().getData());
+
+
+        System.out.println("Left of Left Child Data: " + root.getLeft().getLeft().getData());
+
+
+    }
+}
