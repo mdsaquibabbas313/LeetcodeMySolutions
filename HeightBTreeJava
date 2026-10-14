@@ -1,0 +1,43 @@
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+
+class TreeNode {
+    int data;
+    TreeNode left, right;
+
+    TreeNode(int data) {
+        this.data = data;
+        left = right = null;
+    }
+}
+
+public class Main {
+    
+    // Corrected sizeOfTree method using AtomicInteger
+    public static int heightOfTree(TreeNode node) {
+        if (node == null) return -1;
+
+        int leftHeight = heightOfTree(node.left);
+        int rightHeight = heightOfTree(node.right);
+
+        return 1 + Math.max(leftHeight , rightHeight);
+    }
+
+    public static void main(String[] args) {
+        // Constructing a binary tree matching the pre-order sequence: 
+        // 14, 18, 7, 3, 10, 19, 8, 4, 15 (Total 9 nodes)
+        TreeNode root = new TreeNode(14);
+        root.left = new TreeNode(18);
+        root.left.left = new TreeNode(7);
+        root.left.left.left = new TreeNode(3);
+        root.left.left.right = new TreeNode(10);
+        
+        root.right = new TreeNode(19);
+        root.right.left = new TreeNode(8);
+        root.right.left.left = new TreeNode(4);
+        root.right.left.right = new TreeNode(15);
+        int heightOfTree = heightOfTree(root);
+        
+        System.out.println("Height of the tree: " + heightOfTree);
+    }
+}
