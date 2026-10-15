@@ -1,0 +1,23 @@
+import java.util.*;
+
+public class Main {
+    public static int findKthIndexValue(int n, int k) {
+        if (k == 0) return 0; //[cite: 1]
+        
+        // Fixed method name from 'find' to 'findKthIndexValue'
+        int parentValue = findKthIndexValue(n - 1, k / 2); //[cite: 1]
+
+        if (k % 2 == 0) {
+            return parentValue; //[cite: 1]
+        } else {
+            // Fixed the syntax error and applied the bit flip
+            return parentValue ^ 1; // or (1 - parentValue)[cite: 1]
+        }
+    }
+
+    public static void main(String[] args) {
+        int n = 4;
+        int k = 2;
+        System.out.println("Answer: " + findKthIndexValue(n, k)); // Prints: Answer: 1
+    }
+}
