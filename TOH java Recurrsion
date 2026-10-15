@@ -1,0 +1,19 @@
+import java.util.*;
+
+public class Main {
+    // Class-level variable accessible by all methods in this class
+    public static int countSteps = 0;
+
+    public static void TOH(int n, int src, int dest, int temp) {
+        if (n == 0) return;
+        TOH(n - 1, src, temp, dest);
+        countSteps += 1;
+        System.out.println("Step " + countSteps + ": Move disk " + n + " from rod " + src + " to rod " + dest);
+        TOH(n - 1, temp, dest, src);
+    }
+
+    public static void main(String[] args) {
+        TOH(3, 1, 3, 2);
+        System.out.println("Total steps: " + countSteps);
+    }
+}
