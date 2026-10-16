@@ -64,3 +64,88 @@ public class Main {
         System.out.println("Output: " + Arrays.toString(answer));
     }
 }
+
+
+O(N) & O(N) Time and Space
+
+import java.util.*;
+
+public class Main {
+    public static int[] sumOfiThIndex(int[] arr) {
+        int n = arr.length;
+        int[] ans = new int[n]; // Fixed array declaration syntax
+        int[] prefixSum = new int[n];
+        int[] suffixSum = new int[n];
+        int leftSum = 0;
+        int rightSum = 0;
+        for (int i = 0; i < n; i++) {
+            leftSum += arr[i];
+            prefixSum[i] = leftSum;
+
+            int j = n - 1 - i;
+            rightSum += arr[j];
+            suffixSum[j] = rightSum;
+        }
+
+        for(int i = 0 ; i<n ; i++) {
+          ans[i] = Math.abs(suffixSum[i] - prefixSum[i]);
+        }
+
+        return ans;
+    }
+
+    public static void main(String[] args) {
+        // Test with Example 1 input
+        int[] nums = {10, 4, 8, 3};
+        
+        // Call the method
+        int[] answer = sumOfiThIndex(nums);
+        
+        // Print the result array
+        System.out.println("Input: " + Arrays.toString(nums));
+        System.out.println("Output: " + Arrays.toString(answer));
+    }
+}
+
+
+O(N) TC & O(1) SC
+
+import java.util.*;
+
+public class Main {
+    public static int[] sumOfiThIndex(int[] arr) {
+        int n = arr.length;
+        int[] ans = new int[n]; // Fixed array declaration syntax
+        int totalSum = 0;
+
+        int leftSum = 0;
+        int rightSum = 0;
+
+        for(int i : arr) totalSum += i;
+
+        for(int i = 0 ; i<n ; i++) {
+          
+          rightSum = totalSum - leftSum - arr[i];
+
+          ans[i] = Math.abs(rightSum - leftSum);
+
+          leftSum = leftSum + arr[i];
+
+        }
+
+        return ans;
+    }
+
+    public static void main(String[] args) {
+        // Test with Example 1 input
+        int[] nums = {10, 4, 8, 3};
+        
+        // Call the method
+        int[] answer = sumOfiThIndex(nums);
+        
+        // Print the result array
+        System.out.println("Input: " + Arrays.toString(nums));
+        System.out.println("Output: " + Arrays.toString(answer));
+    }
+}
+
