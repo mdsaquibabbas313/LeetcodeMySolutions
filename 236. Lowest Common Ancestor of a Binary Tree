@@ -1,0 +1,26 @@
+236. Lowest Common Ancestor of a Binary Tree
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null) return null;
+
+        if(root == p || root == q) return root;
+
+        TreeNode lstLCA = lowestCommonAncestor(root.left , p , q);
+        TreeNode rstLCA = lowestCommonAncestor(root.right , p , q);
+
+        if(lstLCA == null) return rstLCA;
+        else if(rstLCA == null) return lstLCA;
+        else return root;
+    }
+}
